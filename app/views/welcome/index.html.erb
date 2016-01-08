@@ -13,13 +13,25 @@ Logged in
 
     <script type="text/javascript">
 
-var map;
-function initMap() {
-  map = new google.maps.Map(document.getElementById('map'), {
-    center: {lat: -34.397, lng: 150.644},
-    zoom: 8
-  });
-}
+		var map;
+		function initMap() {
+		  map = new google.maps.Map(document.getElementById('map'), {
+		    center: {lat: -34.397, lng: 150.644},
+		    zoom: 8
+		  });
+
+			  google.maps.event.addListener(map, "click", function (event) {
+			    var latitude = event.latLng.lat();
+			    var longitude = event.latLng.lng();
+			    console.log( latitude + ', ' + longitude );
+			    $.ajax({
+					  type: "POST",
+					  url: "/users/<%=current_user.id.to_s%>/places",
+					  dataType: 'json',
+					  data: {'latitude': latitude, 'longitude': longitude}
+					});
+			}); //end addListener
+		}
 
     </script>
 

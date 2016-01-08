@@ -53,4 +53,6 @@ end
 
 gem 'devise'
 
+gem 'geocoder'
+
 ruby "2.2.1"
