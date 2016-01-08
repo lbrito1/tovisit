@@ -24,6 +24,14 @@ class PlacesController < ApplicationController
 	end
 
 	def destroy
-		byebug
+		if current_user.places.find_by(name: params['id']).delete
+			respond_to do |format|
+		  	format.json { head :ok }
+			end
+		else
+			respond_to do |format|
+				format.json { render json: "Place not found", status: 404 }
+			end
+		end
 	end
 end

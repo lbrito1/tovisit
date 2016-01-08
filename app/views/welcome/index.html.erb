@@ -33,11 +33,10 @@ Logged in
 					  var marker = new google.maps.Marker({
 					    position: {lat: parseFloat(data[i]['coordinates'][0]), lng: parseFloat(data[i]['coordinates'][1])},
 					    map: map,
-					    title: 'Hello World!',
-					    html: 'Test '+i
+					    city_name: data[i]['name']
 					  });
 						google.maps.event.addListener(marker, 'click', function () {
-							infowindow.setContent(this.html);
+							infowindow.setContent(infowindow_html_delete(this.city_name));
 							infowindow.open(map, this);
 						});
 					  markers.push(marker);
@@ -53,6 +52,17 @@ Logged in
 			  url: "/users/<%=current_user.id.to_s%>/places",
 			  dataType: 'json',
 			  data: {'latitude': latitude, 'longitude': longitude}
+			});	
+
+	    // Redraw updated markers
+			place_markers();
+		}
+
+		function remove_place(name) {
+			$.ajax({
+			  type: "DELETE",
+			  url: "/users/<%=current_user.id.to_s%>/places/"+name,
+			  dataType: 'json',
 			});	
 
 	    // Redraw updated markers
@@ -77,6 +87,23 @@ Logged in
 			});
 		}
 
+		function infowindow_html_add(latitude, longitude) {
+	    return '<div id="content">'+
+	      '<h1 id="infobox_cityname" class="firstHeading">Loading city...</h1>'+
+	      '<div id="bodyContent">'+
+	      '<input id="add_city" type="button" value="Add" onclick="create_place(\''+latitude+'\',\''+longitude+'\');"/>'+
+	      '</div>'+
+	      '</div>';
+		}
+
+		function infowindow_html_delete(name) {
+	    return '<div id="content">'+
+	      '<h1 id="infobox_cityname" class="firstHeading">'+name+'</h1>'+
+	      '<div id="bodyContent">'+
+	      '<input id="add_city" type="button" value="Remove" onclick="remove_place(\''+name+'\');"/>'+
+	      '</div>'+
+	      '</div>';
+		}
 
 		function initMap() {
 	  	infowindow = new google.maps.InfoWindow();
@@ -91,22 +118,8 @@ Logged in
 		  google.maps.event.addListener(map, "click", function (event) {
 		    latitude = event.latLng.lat();
 		    longitude = event.latLng.lng();
-		    console.log( latitude + ', ' + longitude );
-
-		    var contentString = '<div id="content">'+
-		      '<div id="siteNotice">'+
-		      '</div>'+
-		      '<h1 id="infobox_cityname" class="firstHeading">Loading city...</h1>'+
-		      '<div id="bodyContent">'+
-		      '<p><b>Uluru</b>, also referred to as <b>Ayers Rock</b>, is a large ' +
-		      'sandstone rock </p>'+
-		      '<input id="add_city" type="button" value="Add"' +
-		      'onclick="create_place(\''+latitude+'\',\''+longitude+'\');"/>'+
-		      '</div>'+
-		      '</div>';
-
   	  	get_city_name(latitude, longitude, infowindow);
-		    infowindow.setContent(contentString);
+		    infowindow.setContent(infowindow_html_add(latitude, longitude));
 		    infowindow.setPosition({lat: latitude, lng: longitude});
 			}); //end addListener
 		}
