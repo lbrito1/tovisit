@@ -35,6 +35,9 @@ Logged in
 					    map: map,
 					    city_name: data[i]['name']
 					  });
+					  if (data[i]['visited']) {
+					  	marker.setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png')
+					  }
 						google.maps.event.addListener(marker, 'click', function () {
 							infowindow.setContent(infowindow_html_edit(this.city_name));
 							infowindow.open(map, this);

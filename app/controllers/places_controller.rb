@@ -2,7 +2,6 @@ class PlacesController < ApplicationController
 
 	def visit
 		(current_user.find_place params['place_id']).visit
-		byebug
 		respond_to do |format|
 		  format.json { head :ok }
 		end
