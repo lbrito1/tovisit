@@ -15,7 +15,12 @@ Logged in
 
   <script type="text/javascript">
 
+  	var markers = [];
+
 	  function place_markers() {
+			while(markers[0]){
+				markers.pop().setMap(null);
+			}
 			$.ajax({
 			  type: "GET",
 			  url: "/users/<%=current_user.id.to_s%>/places",
@@ -27,10 +32,12 @@ Logged in
 					    map: map,
 					    title: 'Hello World!'
 					  });
+					  markers.push(marker);
 			  	}
 			  }
 			});	
 	  }
+
 
 		function create_place(latitude, longitude) {
 			$.ajax({
@@ -39,6 +46,9 @@ Logged in
 			  dataType: 'json',
 			  data: {'latitude': latitude, 'longitude': longitude}
 			});	
+			
+	    // Redraw updated markers
+			place_markers();
 		}
 
 		function get_city_name(latitude, longitude, infowindow) {
@@ -91,10 +101,6 @@ Logged in
   	  	get_city_name(latitude, longitude, infowindow);
 		    infowindow.setContent(contentString);
 		    infowindow.setPosition({lat: latitude, lng: longitude});
-
-
-				// create_place(latitude, longitude);
-				// marker.setMap(null);
 			}); //end addListener
 		}
 
