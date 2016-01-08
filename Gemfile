@@ -55,4 +55,11 @@ gem 'devise'
 
 gem 'geocoder'
 
+gem 'will_paginate', '~> 3.0.6'
+
+gem 'bootstrap-sass', '3.2.0.2'
+
+gem 'autoprefixer-rails'
+
+
 ruby "2.2.1"

@@ -1,20 +1,29 @@
 class PlacesController < ApplicationController
 
-	def index
+	def visit
+		#mark as visited
 	end
 
-	def show
+	def index
+		@places = current_user.places #will_paginate
+		respond_to do |format|
+			format.json { render json: @places.to_json }
+			format.html
+		end
 	end
 
 	def create
-		place = Place.new(coordinates: [params['latitude'],params['longitude']])
-		current_user.places << place
-		current_user.save!
+		addr = Geocoder.search([params['latitude'],params['longitude']]).first # Refactor this
+		place = Place.new(coordinates: [params['latitude'],params['longitude']], 
+			user: current_user, name: addr.city)
+		place.save! if place.valid?
+
 		respond_to do |format|
 		  format.json { head :ok }
 		end
 	end
 
 	def destroy
+		byebug
 	end
 end

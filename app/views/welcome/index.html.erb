@@ -11,10 +11,26 @@ Logged in
   <div id="map" style='width: 800px; height: 400px;'></div>
 </div>
 
+	<script async defer src="https://maps.googleapis.com/maps/api/js?key=<%=ENV['GOOGLE_API_KEY']%>&callback=initMap" type="text/javascript"></script>
+
   <script type="text/javascript">
-  var latitude, longitude;
 
-
+	  function place_markers() {
+			$.ajax({
+			  type: "GET",
+			  url: "/users/<%=current_user.id.to_s%>/places",
+			  dataType: 'json',
+			  success: function(data) {
+			  	for (i=0; i<data.length; i++) {
+					  var marker = new google.maps.Marker({
+					    position: {lat: parseFloat(data[i]['coordinates'][0]), lng: parseFloat(data[i]['coordinates'][1])},
+					    map: map,
+					    title: 'Hello World!'
+					  });
+			  	}
+			  }
+			});	
+	  }
 
 		function create_place(latitude, longitude) {
 			$.ajax({
@@ -44,13 +60,16 @@ Logged in
 		}
 
 		var map;
+  	var latitude, longitude;
 		function initMap() {
 	  	var infowindow = new google.maps.InfoWindow();
 
 		  map = new google.maps.Map(document.getElementById('map'), {
-		    center: {lat: -34.397, lng: 150.644},
-		    zoom: 8
+		    center: {lat: -8.03, lng: -34.8},
+		    zoom: 5
 		  });
+
+		  place_markers();
 
 		  google.maps.event.addListener(map, "click", function (event) {
 		    latitude = event.latLng.lat();
@@ -79,8 +98,9 @@ Logged in
 			}); //end addListener
 		}
 
+		
+
     </script>
 
 
 <% end %>
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=<%=ENV['GOOGLE_API_KEY']%>&callback=initMap" type="text/javascript"></script>
