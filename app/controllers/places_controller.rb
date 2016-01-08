@@ -4,6 +4,7 @@ class PlacesController < ApplicationController
 		(current_user.find_place params['place_id']).visit
 		respond_to do |format|
 		  format.json { head :ok }
+		  format.html { redirect_to user_places_path(current_user) }
 		end
 	end
 
