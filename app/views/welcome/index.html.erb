@@ -11,13 +11,18 @@ Logged in
   <div id="map" style='width: 800px; height: 400px;'></div>
 </div>
 
-<script>
-	$(document).ready(function() {
-		console.log("Loading map...");
-		gmap_load();
-	});
+    <script type="text/javascript">
 
+var map;
+function initMap() {
+  map = new google.maps.Map(document.getElementById('map'), {
+    center: {lat: -34.397, lng: 150.644},
+    zoom: 8
+  });
+}
 
-</script>
+    </script>
+
 
 <% end %>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=<%=ENV['GOOGLE_API_KEY']%>&callback=initMap" type="text/javascript"></script>
