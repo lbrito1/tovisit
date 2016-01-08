@@ -25,7 +25,7 @@ Logged in
 			});	
 		}
 
-		function get_city_name(latitude, longitude) {
+		function get_city_name(latitude, longitude, infowindow) {
 			var cityname = "Not found"
 			$.ajax({
 			  type: "GET",
@@ -33,10 +33,12 @@ Logged in
 			  dataType: 'json',
 			  data: {'latitude': latitude, 'longitude': longitude},
 			  success: function(data) {
+			    infowindow.open(map);
 			  	$('#infobox_cityname').text(data['city']);
 			  },
 			  error: function(data) {
 			  	console.log("Failed ajax");
+			  	infowindow.close();
 			  }
 			});
 		}
@@ -67,11 +69,11 @@ Logged in
 		      '</div>'+
 		      '</div>';
 
-  	  	get_city_name(latitude, longitude);
+  	  	get_city_name(latitude, longitude, infowindow);
 		    infowindow.setContent(contentString);
 		    infowindow.setPosition({lat: latitude, lng: longitude});
 
-		    infowindow.open(map);
+
 				// create_place(latitude, longitude);
 				// marker.setMap(null);
 			}); //end addListener
