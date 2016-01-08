@@ -8,4 +8,8 @@ class Place
 	field :visited, type: Boolean, default: false
 
  	validates_uniqueness_of :name
+
+ 	def visit
+ 		update_attributes(visited: !self.visited)
+ 	end
 end

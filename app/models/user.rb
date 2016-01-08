@@ -35,4 +35,9 @@ class User
   # field :locked_at,       type: Time
 
   embeds_many :places
+
+  
+  def find_place name
+    self.places.find_by(name: name)
+  end
 end

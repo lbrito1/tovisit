@@ -1,7 +1,11 @@
 class PlacesController < ApplicationController
 
 	def visit
-		#mark as visited
+		(current_user.find_place params['place_id']).visit
+		byebug
+		respond_to do |format|
+		  format.json { head :ok }
+		end
 	end
 
 	def index
@@ -24,7 +28,7 @@ class PlacesController < ApplicationController
 	end
 
 	def destroy
-		if current_user.places.find_by(name: params['id']).delete
+		if (current_user.find_place params['id']).delete
 			respond_to do |format|
 		  	format.json { head :ok }
 			end

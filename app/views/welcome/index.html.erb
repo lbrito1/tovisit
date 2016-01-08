@@ -36,7 +36,7 @@ Logged in
 					    city_name: data[i]['name']
 					  });
 						google.maps.event.addListener(marker, 'click', function () {
-							infowindow.setContent(infowindow_html_delete(this.city_name));
+							infowindow.setContent(infowindow_html_edit(this.city_name));
 							infowindow.open(map, this);
 						});
 					  markers.push(marker);
@@ -67,6 +67,17 @@ Logged in
 
 	    // Redraw updated markers
 			place_markers();
+		}		
+
+		function visit_place(name) {
+			$.ajax({
+			  type: "PUT",
+			  url: "/users/<%=current_user.id.to_s%>/places/"+name+'/visit',
+			  dataType: 'json',
+			});	
+
+	    // Redraw updated markers
+			place_markers();
 		}
 
 		function get_city_name(latitude, longitude, infowindow) {
@@ -87,7 +98,7 @@ Logged in
 			});
 		}
 
-		function infowindow_html_add(latitude, longitude) {
+		function infowindow_html_new(latitude, longitude) {
 	    return '<div id="content">'+
 	      '<h1 id="infobox_cityname" class="firstHeading">Loading city...</h1>'+
 	      '<div id="bodyContent">'+
@@ -96,11 +107,12 @@ Logged in
 	      '</div>';
 		}
 
-		function infowindow_html_delete(name) {
+		function infowindow_html_edit(name) {
 	    return '<div id="content">'+
 	      '<h1 id="infobox_cityname" class="firstHeading">'+name+'</h1>'+
 	      '<div id="bodyContent">'+
 	      '<input id="add_city" type="button" value="Remove" onclick="remove_place(\''+name+'\');"/>'+
+	      '<input id="visit_city" type="button" value="Visit" onclick="visit_place(\''+name+'\');"/>'+
 	      '</div>'+
 	      '</div>';
 		}
@@ -119,7 +131,7 @@ Logged in
 		    latitude = event.latLng.lat();
 		    longitude = event.latLng.lng();
   	  	get_city_name(latitude, longitude, infowindow);
-		    infowindow.setContent(infowindow_html_add(latitude, longitude));
+		    infowindow.setContent(infowindow_html_new(latitude, longitude));
 		    infowindow.setPosition({lat: latitude, lng: longitude});
 			}); //end addListener
 		}

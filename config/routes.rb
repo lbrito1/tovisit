@@ -4,7 +4,9 @@ Rails.application.routes.draw do
   root 'welcome#index'
 
   resources :users do
-    resources :places    
+    resources :places do
+      put 'visit'
+    end
   end
 
   get 'decode' => 'geocoder#decode'
