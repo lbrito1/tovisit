@@ -16,6 +16,9 @@ Logged in
   <script type="text/javascript">
 
   	var markers = [];
+		var map;
+  	var latitude, longitude;
+  	var infowindow;
 
 	  function place_markers() {
 			while(markers[0]){
@@ -30,8 +33,13 @@ Logged in
 					  var marker = new google.maps.Marker({
 					    position: {lat: parseFloat(data[i]['coordinates'][0]), lng: parseFloat(data[i]['coordinates'][1])},
 					    map: map,
-					    title: 'Hello World!'
+					    title: 'Hello World!',
+					    html: 'Test '+i
 					  });
+						google.maps.event.addListener(marker, 'click', function () {
+							infowindow.setContent(this.html);
+							infowindow.open(map, this);
+						});
 					  markers.push(marker);
 			  	}
 			  }
@@ -46,7 +54,7 @@ Logged in
 			  dataType: 'json',
 			  data: {'latitude': latitude, 'longitude': longitude}
 			});	
-			
+
 	    // Redraw updated markers
 			place_markers();
 		}
@@ -69,10 +77,9 @@ Logged in
 			});
 		}
 
-		var map;
-  	var latitude, longitude;
+
 		function initMap() {
-	  	var infowindow = new google.maps.InfoWindow();
+	  	infowindow = new google.maps.InfoWindow();
 
 		  map = new google.maps.Map(document.getElementById('map'), {
 		    center: {lat: -8.03, lng: -34.8},
