@@ -4,7 +4,6 @@ class Place
 
 	embedded_in :user
 
-	field :name, type: String 
 	field :coordinates, :type => Array
 	field :address
 	field :visited, type: Boolean, default: false

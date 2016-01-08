@@ -7,7 +7,12 @@ class PlacesController < ApplicationController
 	end
 
 	def create
-		byebug
+		place = Place.new(coordinates: [params['latitude'],params['longitude']])
+		current_user.places << place
+		current_user.save!
+		respond_to do |format|
+		  format.json { head :ok }
+		end
 	end
 
 	def destroy

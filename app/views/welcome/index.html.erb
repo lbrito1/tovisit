@@ -11,7 +11,11 @@ Logged in
   <div id="map" style='width: 800px; height: 400px;'></div>
 </div>
 
-    <script type="text/javascript">
+  <script type="text/javascript">
+  var latitude, longitude;
+
+
+
 		function create_place(latitude, longitude) {
 			$.ajax({
 			  type: "POST",
@@ -20,51 +24,57 @@ Logged in
 			  data: {'latitude': latitude, 'longitude': longitude}
 			});	
 		}
+
+		function get_city_name(latitude, longitude) {
+			var cityname = "Not found"
+			$.ajax({
+			  type: "GET",
+			  url: "/decode",
+			  dataType: 'json',
+			  data: {'latitude': latitude, 'longitude': longitude},
+			  success: function(data) {
+			  	$('#infobox_cityname').text(data['city']);
+			  },
+			  error: function(data) {
+			  	console.log("Failed ajax");
+			  }
+			});
+		}
+
 		var map;
 		function initMap() {
+	  	var infowindow = new google.maps.InfoWindow();
+
 		  map = new google.maps.Map(document.getElementById('map'), {
 		    center: {lat: -34.397, lng: 150.644},
 		    zoom: 8
 		  });
 
-		  		  var contentString = '<div id="content">'+
-      '<div id="siteNotice">'+
-      '</div>'+
-      '<h1 id="firstHeading" class="firstHeading">Uluru</h1>'+
-      '<div id="bodyContent">'+
-      '<p><b>Uluru</b>, also referred to as <b>Ayers Rock</b>, is a large ' +
-      'sandstone rock formation in the southern part of the '+
-      'Northern Territory, central Australia. It lies 335&#160;km (208&#160;mi) '+
-      'south west of the nearest large town, Alice Springs; 450&#160;km '+
-      '(280&#160;mi) by road. Kata Tjuta and Uluru are the two major '+
-      'features of the Uluru - Kata Tjuta National Park. Uluru is '+
-      'sacred to the Pitjantjatjara and Yankunytjatjara, the '+
-      'Aboriginal people of the area. It has many springs, waterholes, '+
-      'rock caves and ancient paintings. Uluru is listed as a World '+
-      'Heritage Site.</p>'+
-      '<p>Attribution: Uluru, <a href="https://en.wikipedia.org/w/index.php?title=Uluru&oldid=297882194">'+
-      'https://en.wikipedia.org/w/index.php?title=Uluru</a> '+
-      '(last visited June 22, 2009).</p>'+
-      '</div>'+
-      '</div>';
+		  google.maps.event.addListener(map, "click", function (event) {
+		    latitude = event.latLng.lat();
+		    longitude = event.latLng.lng();
+		    console.log( latitude + ', ' + longitude );
 
-		  var infowindow = new google.maps.InfoWindow({
-		    content: contentString
-		  });
+		    var contentString = '<div id="content">'+
+		      '<div id="siteNotice">'+
+		      '</div>'+
+		      '<h1 id="infobox_cityname" class="firstHeading">Loading city...</h1>'+
+		      '<div id="bodyContent">'+
+		      '<p><b>Uluru</b>, also referred to as <b>Ayers Rock</b>, is a large ' +
+		      'sandstone rock </p>'+
+		      '<input id="add_city" type="button" value="Add"' +
+		      'onclick="create_place(\''+latitude+'\',\''+longitude+'\');"/>'+
+		      '</div>'+
+		      '</div>';
 
-			  google.maps.event.addListener(map, "click", function (event) {
-			    var latitude = event.latLng.lat();
-			    var longitude = event.latLng.lng();
-			    console.log( latitude + ', ' + longitude );
+  	  	get_city_name(latitude, longitude);
+		    infowindow.setContent(contentString);
+		    infowindow.setPosition({lat: latitude, lng: longitude});
 
-					infowindow.setPosition({lat: latitude, lng: longitude});
-
-			    infowindow.open(map);
-					// create_place(latitude, longitude);
-					// marker.setMap(null);
+		    infowindow.open(map);
+				// create_place(latitude, longitude);
+				// marker.setMap(null);
 			}); //end addListener
-
-
 		}
 
     </script>
