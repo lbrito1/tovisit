@@ -2,10 +2,12 @@
 
 <h1>Listing Places</h1>
 
-<table>
+<table class="table table-striped table-hover ">
   <thead>
     <tr>
-      <th colspan="3"></th>
+      <th colspan="1">Name</th>
+      <th colspan="1">Visited yet?</th>
+      <th colspan="2"></th>
     </tr>
   </thead>
 
@@ -13,8 +15,8 @@
     <% @paginated_places.each do |place| %>
       <tr>
         <td><%= place.name %></td>
-        <td><%= place.visited %></td>
-        <td><%= link_to 'Destroy', user_place_path(current_user, place.name), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= place.visited? ? "Yep" : "Nope" %></td>
+        <td><%= link_to 'Delete', user_place_path(current_user, place.name), method: :delete, data: { confirm: 'Are you sure?' } %></td>
         <td><%= link_to 'Visit', user_place_visit_path(current_user, place.name), method: :put %></td>
       </tr>
     <% end %>

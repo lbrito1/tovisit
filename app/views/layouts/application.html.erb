@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+  </style>
   <title>Tovisit</title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
@@ -9,17 +10,26 @@
 
   <body>
 
-<%= render partial: 'layouts/navbar' %>
-<p class="notice"><%= notice %></p>
-<p class="alert"><%= alert %></p>
+    <!-- Navbar -->
+    <%= render partial: 'layouts/navbar' %>
 
-    <div class="container">
-
-      <div class="starter-template">
-        <%= yield %>
+    <!-- Infobox warnings -->
+    <%if notice.present? %>
+      <div class="alert alert-dismissible alert-info">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <%= notice %>
       </div>
+    <%end%>
+    <%if alert.present?%>
+    <div class="alert alert-warning alert-info">
+      <button type="button" class="close" data-dismiss="alert">×</button>
+      <%= alert %>
+    </div>
+    <%end%>
 
-    </div><!-- /.container -->
+    <div class="container starter-template">
+      <%= yield %>
+    </div>
   </body>
 </html>
 
