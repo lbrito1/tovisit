@@ -18,6 +18,7 @@
         <td><%= link_to 'Visit', user_place_visit_path(current_user, place.name), method: :put %></td>
       </tr>
     <% end %>
+    <%= will_paginate @posts %>
   </tbody>
 </table>
 

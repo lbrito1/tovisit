@@ -1,3 +1,5 @@
+require 'will_paginate/array'
+
 class PlacesController < ApplicationController
 
 	def visit
@@ -9,7 +11,7 @@ class PlacesController < ApplicationController
 	end
 
 	def index
-		@places = current_user.places #will_paginate
+		@places = current_user.places.paginate(page: params[:page], per_page: 10)
 		respond_to do |format|
 			format.json { render json: @places.to_json }
 			format.html
