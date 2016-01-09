@@ -1,28 +1,20 @@
-== README
+# ToVisit
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+After a few of months off I was a little rusty on Rails, so I took a couple of days and built ToVisit hoping that it would refresh my memory a bit. Here's a non compprehensive list of stuff used:
 
-Things you may want to cover:
+* Heroku
+* Mongolabs
+* Ruby on Rails (duh!)
+* Mongoid 5.0 
+* Devise
+* Geocoder for the reverse address encoding (latlong -> address)
+* Will paginate
+* Bootstrap
+* Bootswatch
 
-* Ruby version
+There are a few things lacking in this app:
 
-* System dependencies
+* No autocomplete in the search box. May add later.
+* No tests! Life is just too short.
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+Feel free to contact me if you want at lbrito@gmail.com.
