@@ -11,7 +11,8 @@ class PlacesController < ApplicationController
 	end
 
 	def index
-		@places = current_user.places.paginate(page: params[:page], per_page: 10)
+		@places = current_user.places
+		@paginated_places = @places.paginate(page: params[:page], per_page: 10)
 		respond_to do |format|
 			format.json { render json: @places.to_json }
 			format.html
@@ -19,8 +20,12 @@ class PlacesController < ApplicationController
 	end
 
 	def create
-		addr = Geocoder.search([params['latitude'],params['longitude']]).first # Refactor this
-		place = Place.new(coordinates: [params['latitude'],params['longitude']], 
+		query = params['name'] # Textual input
+		query ||= [params['latitude'],params['longitude']] # Map input
+
+		addr = Geocoder.search(query).first 
+
+		place = Place.new(coordinates: [addr.latitude,addr.longitude], 
 			user: current_user, name: addr.city)
 		place.save! if place.valid?
 
