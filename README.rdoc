@@ -1,4 +1,4 @@
-# ToVisit
+== ToVisit
 
 After a few of months off I was a little rusty on Rails, so I took a couple of days and built ToVisit hoping that it would refresh my memory a bit. Here's a non compprehensive list of stuff used:
 
