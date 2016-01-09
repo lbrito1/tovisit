@@ -1,6 +1,7 @@
-<h1>Where would you like to go?</h1>
 
 <% if user_signed_in? %>
+
+<h1>Where would you like to go?</h1>
 
 <div>
   <div id="map" style='width: 100%; height: 400px;'></div>
@@ -49,9 +50,10 @@
 			  type: "POST",
 			  url: "/users/<%=current_user.id.to_s%>/places",
 			  dataType: 'json',
-			  data: {'latitude': latitude, 'longitude': longitude}
+			  data: {'latitude': latitude, 'longitude': longitude},
 			});	
 
+			infowindow.close();
 	    // Redraw updated markers
 			place_markers();
 		}
@@ -61,6 +63,9 @@
 			  type: "DELETE",
 			  url: "/users/<%=current_user.id.to_s%>/places/"+name,
 			  dataType: 'json',
+			  success: function() {
+			  	infowindow.close();
+			  }
 			});	
 
 	    // Redraw updated markers
@@ -72,6 +77,9 @@
 			  type: "PUT",
 			  url: "/users/<%=current_user.id.to_s%>/places/"+name+'/visit',
 			  dataType: 'json',
+			  success: function() {
+			  	infowindow.close();
+			  }
 			});	
 
 	    // Redraw updated markers
@@ -138,5 +146,10 @@
 
     </script>
 
+<%else%>
+
+<h1>ToVisit</h1>
+
+<p>Do you have a travel bucket list? Well, you definitively should. <strong>ToVisit</strong> is a todo list for explorers.</p>
 
 <% end %>

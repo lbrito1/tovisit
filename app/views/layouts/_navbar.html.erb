@@ -16,8 +16,42 @@
         	<li><%= link_to('Logout', destroy_user_session_path, :method => :delete) %></li>
       	<% else %>
         	<li><%= link_to('Login', new_user_session_path)  %></li>
+        	<li><%= link_to('Signup', new_user_registration_path)  %></li>
         <% end %>
+        <li>
+        <%= link_to "About", "#myModal", :class => "btn", "data-toggle" => "modal" %>
+        </li>
       </ul>
     </div><!--/.nav-collapse -->
   </div>
 </nav>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">About ToVisit</h4>
+      </div>
+      <div class="modal-body">
+        <p>After a few of months off I was a little rusty on Rails, so I took a couple of days and built ToVisit hoping that it would refresh my memory a bit. Here's a non compprehensive list of stuff used:</p>
+        <ul>
+        	<li><strong>Heroku</strong></li>
+        	<li><strong>Mongolabs</strong></li>
+        	<li><strong>Ruby on Rails</strong> (duh!)</li>
+        	<li><strong>Mongoid 5.0</strong></li> 
+        	<li><strong>Devise</strong></li>
+        	<li><strong>Geocoder</strong> for the reverse address encoding (latlong -> address)</li>
+        	<li><strong>Will paginate</strong></li>
+        	<li><strong>Bootstrap</strong></li>
+        </ul>
+        <p>Feel free to contact me if you want at lbrito@gmail.com.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <a href="https://github.com/lbrito1" class="btn btn-default">My GitHub</a>
+      </div>
+    </div>
+  </div>
+</div>
