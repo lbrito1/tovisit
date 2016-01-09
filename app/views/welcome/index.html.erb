@@ -198,6 +198,7 @@
     {
         background-size: cover;
         background-repeat: no-repeat;
+        background-image: url('/assets/<%="0#{((rand*5).to_i)}.jpg"%>');
         height: 600px;
     }
 
@@ -209,14 +210,5 @@
 		<p><%= link_to "More about ToVisit", "#myModal", "data-toggle" => "modal", "class" => "btn btn-default" %></p>
 	</div>
 
-<script type="text/javascript">
-
-    $(document).ready(function() {
-        var images = ['01.jpg', '02.jpg', '03.jpg', '04.jpg', '05.jpg'];
-
-        $('.jumbotron').css({'background-image': 'url(/assets/' + images[Math.floor(Math.random() * images.length)] + ')'});
-    });
-
-</script>
 
 <% end %>
