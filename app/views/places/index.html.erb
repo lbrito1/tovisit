@@ -14,7 +14,7 @@
       <tr>
         <td><%= place.name %></td>
         <td><%= place.visited %></td>
-        <td><%= link_to 'Destroy', [current_user, place], method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Destroy', user_place_path(current_user, place.name), method: :delete, data: { confirm: 'Are you sure?' } %></td>
         <td><%= link_to 'Visit', user_place_visit_path(current_user, place.name), method: :put %></td>
       </tr>
     <% end %>

@@ -33,6 +33,7 @@ class PlacesController < ApplicationController
 		if (current_user.find_place params['id']).delete
 			respond_to do |format|
 		  	format.json { head :ok }
+		  	format.html { redirect_to user_places_path(current_user) }
 			end
 		else
 			respond_to do |format|
