@@ -59,6 +59,8 @@ gem 'will_paginate', '~> 3.0.6'
 
 gem 'bootstrap-sass', '3.2.0.2'
 
+gem 'bootswatch-rails'
+
 gem 'autoprefixer-rails'
 
 

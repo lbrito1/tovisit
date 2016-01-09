@@ -14,5 +14,12 @@
  *= require_self
  */
 
-@import "bootstrap-sprockets"
-@import "bootstrap"
+@import "bootstrap-sprockets";
+
+@import "bootswatch/sandstone/variables";
+
+@import "bootstrap";
+
+body { padding-top: 60px; }
+
+@import "bootswatch/sandstone/bootswatch";
